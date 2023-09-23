@@ -8,5 +8,4 @@
             return 'Retired';
         }
     }
-    echo message(20);
 ?>
