@@ -7,11 +7,21 @@
 </head>
 <body>
     <form method="GET" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-        <label for="name">Name:</label>
-        <input type="text" name="name">
-        <label for="last_name">Last name:</label>
-        <input type="text" name="last_name">
+        <input type="text" name="name" placeholder="Name">
+        <input type="text" name="last_name" placeholder="Last name">
         <input type="submit">
+        <input type="reset">
     </form>
+    <?php
+        if ($_SERVER['REQUEST_METHOD'] == 'GET' && !empty($_GET)) {
+            $name = preg_replace('/[^A-Za-z]/', '', $_GET['name']);
+            $last_name = preg_replace('/[^A-Za-z]/', '', $_GET['last_name']);
+            if (empty($name) || empty($last_name)) {
+                echo 'Name & Last name is required';
+            } else {
+                echo ucfirst($name) . ' ' . ucfirst($last_name);
+            }
+        }
+    ?>
 </body>
 </html>
