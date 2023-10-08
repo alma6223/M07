@@ -12,8 +12,10 @@
     
     function login(array $users, string $username, string $password): bool {
         foreach($users as $user) {
-            if ($user[0] == $username && $user[1] == $password) return true;
+            if ($user[0] == $username && trim($user[1]) == $password) return true;
         }
         return false;
     }
 
+
+    

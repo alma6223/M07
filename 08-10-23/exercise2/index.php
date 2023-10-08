@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
@@ -12,13 +11,16 @@
         <input type="password" name="password" placeholder="Password">
         <input type="submit">
     </form>
-    <?php   
+    <?php
         include('functions.php');
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $username = preg_replace('/[^0-9A-Za-z]/', '', $_POST['username']);
-            $password = $_POST['password'];
-            $users = users('users.csv');
-            echo exists($users, $username, $password);
+            $username = htmlspecialchars($_POST['username']);
+            $password = htmlspecialchars($_POST['password']);
+            if (!exists('users.csv', $username)) {
+                signup('users.csv', $username, $password);
+            } else {
+                echo 'Invalid username';
+            }
         }
     ?>
 </body>
