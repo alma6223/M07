@@ -5,7 +5,7 @@
  * @param string $filename - The name of the CSV file to read.
  * @return array - An array containing country data from the CSV file.
  */
-function countries($filename): array {
+function countries(string $filename): array {
     $countries = [];
     $file = fopen($filename, 'r');
     while ($data = fgetcsv($file)) {
@@ -20,7 +20,7 @@ function countries($filename): array {
  *
  * @param array $countries - An array containing country data.
  */
-function form($countries) {
+function form(array $countries) {
     foreach ($countries as $country) {
         if ($country[0] == $_POST['country']) {
             echo "<form method='POST' action='country_form.php'>";
@@ -44,7 +44,7 @@ function form($countries) {
  * @param string $input_country - The name of the country to check for changes.
  * @param string $capital - The updated capital value.
  */
-function check_changes(&$countries, $population, $input_country, $capital) {
+function check_changes(array &$countries, string $population, string $input_country, string $capital) {
     foreach($countries as &$country) {
         if ($country[0] == $input_country) {
             if ($country[1] != $population || $country[2] != $capital) {
@@ -61,7 +61,7 @@ function check_changes(&$countries, $population, $input_country, $capital) {
  * @param array $countries - An array containing country data.
  * @param string $filename - The name of the CSV file to write.
  */
-function change_data($countries, $filename) {
+function change_data(array $countries, string $filename) {
     $file = fopen($filename, 'w');
     foreach($countries as $country) {
         fwrite($file, $country[0] . ',' . $country[1] . ',' . $country[2] . PHP_EOL);
