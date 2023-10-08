@@ -1,8 +1,9 @@
-<?php 
-function add_file(string $file, string $name, string $tmp_name): bool {
-    if (!file_exists($name)) {
-        return move_uploaded_file($tmp_name, $file);
+<?php
+function add_file(string $name, string $tmp_name): string {
+    if (!file_exists('files/' . $name)) {
+        move_uploaded_file($tmp_name, 'files/' . $name);
+        return 'File uploaded successfully';
     }
-    return false;
+    return 'Error uploading file';
 }
 

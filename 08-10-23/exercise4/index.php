@@ -6,15 +6,29 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" enctype="multipart/form-data">
-        <input type="file" name="file">
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+        <select name="select_file">
+            <?php
+                foreach(scandir('files/') as $file) {
+                    echo "<option value='" . $file . "'>" . $file . "</option>";
+                }
+            ?>
+        </select>
         <input type="submit">
     </form>
     <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $file = $_FILES['file'];
-            move_uploaded_file($file['tmp_name'], $file['name']);
+            echo "<textarea>" . file_get_contents('files/' . $_POST['select_file']) . "</textarea>";
         }
     ?>
-</body>
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" enctype="multipart/form-data">
+        <input type="file" name="input_file">
+        <input type="submit">
+    </form>
+    <?php
+        include 'functions.php';
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            echo add_file($_FILES['input_file']['name'], $_FILES['input_file']['tmp_name']);
+        }
+    ?>
 </html>
