@@ -1,30 +1,28 @@
 <?php
 /**
- * 
+ * get the categories from csv file
+ * @param string $filename csv filename
+ * @return array category array
  */
-function categories(string $filepath): array {
-    $file = fopen(filename: $filepath, mode: 'r');
-    while ($categories = fgetcsv(stream: $file)) {
+function categories(string $filename): array {
+    $stream = fopen($filename, 'r');
+    while ($categories = fgetcsv($stream, separator: ';')) {
         return $categories;
     }
-    fclose($file);
+    fclose($stream);
 }
 
 
 /**
- * 
+ * get the menu from csv file
+ * @param string $filename csv filename
+ * @return array menus array
  */
-function menu(string $filepath): array {
-    $menu = [];
-    $stream = fopen($filepath, 'r');
-    while ($data = fgetcsv(stream: $stream, separator: ';')) {
-        $dish = [
-            'id' => $data[0],
-            'category' => $data[1],
-            'name' => $data[2],
-            'price' => $data[3]
-        ];
-        array_push($menu, $dish);
+function menu(string $filename): array {
+    $menu = array();
+    $stream = fopen($filename, 'r');
+    while ($dish = fgetcsv($stream, separator: ';')) {
+        array_push($menu, array('id' => $dish[0], 'category' => $dish[1], 'name' => $dish[2], 'price' => $dish[3]));
     }
     fclose($stream);
     return $menu;
@@ -32,9 +30,11 @@ function menu(string $filepath): array {
 
 
 /**
- * 
+ * shows menus according to their category
+ * @param string $category menu category
+ * @param array $menu menus array
  */
-function table(array $categories, array $menu): void {
+function table(string $category, array $menu): void {
     echo "
     <table>
         <tr>
@@ -43,7 +43,7 @@ function table(array $categories, array $menu): void {
         </tr>
     ";
     foreach($menu as $dish) {
-        if (in_array($dish['category'], $categories)) {
+        if ($dish['category'] == $category) {
             echo "     
             <tr>
                 <td>{$dish['name']}</th>
@@ -54,4 +54,3 @@ function table(array $categories, array $menu): void {
     }
     echo "</table>";
 }
-
