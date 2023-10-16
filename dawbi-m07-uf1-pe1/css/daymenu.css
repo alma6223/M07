@@ -1,0 +1,30 @@
+#menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+#menu tr {
+    border-bottom: 1px solid black;
+}
+
+#menu td {
+    padding: 10px;
+}
+
+#menu table {
+    width: 250px;
+    margin: 20px;
+}
+
+#menu th {
+    padding: 10px;
+    text-align: center;
+}
+
+#menu caption {
+    text-align: center;
+    padding: 10px;
+}

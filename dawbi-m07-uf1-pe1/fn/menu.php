@@ -37,6 +37,7 @@ function menu(string $filename): array {
 function table(string $category, array $menu): void {
     echo "
     <table>
+        <caption>" . ucwords($category) . "</caption>
         <tr>
             <th>Name</th>
             <th>Price</th>

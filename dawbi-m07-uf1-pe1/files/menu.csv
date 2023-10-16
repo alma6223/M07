@@ -1,12 +1,12 @@
 1;appetiser;Caprese Salad;9.99
 2;appetiser;Spinach and Artichoke Dip;8.99
 3;appetiser;Garlic Butter Shrimp;11.99
-4;firstcourse;Tomato Basil Soup;5.99
-5;firstcourse;Caesar Salad;7.99
-6;firstcourse;Mushroom Risotto;12.99
-7;maincourse;Grilled Salmon;18.99
-8;maincourse;Chicken Alfredo;16.99
-9;maincourse;Filet Mignon;24.99
+4;first course;Tomato Basil Soup;5.99
+5;first course;Caesar Salad;7.99
+6;first course;Mushroom Risotto;12.99
+7;main course;Grilled Salmon;18.99
+8;main course;Chicken Alfredo;16.99
+9;main course;Filet Mignon;24.99
 10;desert;Chocolate Lava Cake;6.99
 11;desert;Tiramisu;8.99
 12;desert;Strawberry Cheesecake;7.99
