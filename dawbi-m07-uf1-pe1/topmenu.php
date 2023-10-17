@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <nav class="navbar navbar-default">
 <div class="container col-md-10">
 <div class="navbar-header">
@@ -6,8 +9,19 @@
 <ul class="nav navbar-nav">
 <li><a href='index.php'>Home</a></li>
 <li><a href='daymenu.php'>Day Menu</a></li>
-<li><a href='register.php'>Register</a></li>
-<li><a href='login.php'>Login</a></li>
+<?php
+    if (!isset($_SESSION['rol'])) {
+        echo "
+            <li><a href='register.php'>Register</a></li>
+            <li><a href='login.php'>Login</a></li>
+        ";
+    }
+?>
+<?php
+    if (isset($_SESSION['username'])) {
+        echo "<li><a href='#'>Logout</a></li>";
+    }
+?>
 </ul>
 </div>
 </nav>
