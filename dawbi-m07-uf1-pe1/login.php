@@ -13,8 +13,8 @@
     <h2>Login form</h2>
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
       <div class="form-group">
-        <label for="username">Email:</label>
-        <input type="username" class="form-control" id="username" placeholder="Enter username" name="username">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
@@ -25,21 +25,22 @@
       </div>
       <button type="submit" name="loginsubmit" class="btn btn-default">Submit</button>
     </form>
+    <?php
+      include 'fn/users.php';
+      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $username = htmlspecialchars($_POST['username']);
+        if (login('files/users.csv', $username, htmlspecialchars($_POST['password']))) {
+          session_start();
+          $user = user('files/users.csv', $username);
+          $_SESSION['username'] = $user['username'];
+          $_SESSION['rol'] = $user['rol'];
+          $_SESSION['full_name'] = $user['name'] . ' ' . $user['surname'];
+          header('Location: index.php');
+        } else {
+          echo 'Invalid credentials';
+        }
+      }
+    ?>
   </div>
-	<?php
-	include 'fn/users.php';
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$username = htmlspecialchars($_POST['username']);
-			$password = htmlspecialchars($_POST['password']);
-			if (login('files/users.csv', $username, $password)) {
-				session_start();
-				$user = user('files/users.csv', $username);
-				$_SESSION['username'] = $username;
-				$_SESSION['rol'] = $user['rol'];
-				$_SESSION['name'] = $user['name'];
-				header('Location: index.php');
-			}
-		}
-	?>
 </body>
 </html>

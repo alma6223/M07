@@ -6,11 +6,9 @@ function register(string $filename, array $user): bool {
     $register = false;
     $stream = fopen($filename, 'r+');
     while ($data = fgetcsv($stream, separator: ';')) {
-        if ($data[0] != $user[0]) {
-            fwrite($stream, $user[0] . ';' . $user[1] . ';' . $user[2] . ';' . $user[3] . ';' . $user[4] . PHP_EOL); 
-            $register = true;
-        }
+        if ($data[0] != $user['username']) $register = true;
     }
+    if ($register) fwrite($stream, $user['username'] . ';' . $user['password'] . ';' . $user['rol'] . ';' . $user['name'] . ';' . $user['surname'] . PHP_EOL); 
     fclose($stream);
     return $register;
 }
@@ -23,9 +21,7 @@ function login(string $filename, string $username, string $password): bool {
     $login = false;
     $stream = fopen($filename, 'r');
     while ($data = fgetcsv($stream, separator: ';')) {
-        if ($data[0] == $username && $data[1] == $password) {
-            $login = true;
-        }
+        if ($data[0] == $username && $data[1] == $password) $login = true;
     }
     fclose($stream);
     return $login;
@@ -38,11 +34,14 @@ function login(string $filename, string $username, string $password): bool {
 function user(string $filename, string $username): array {
     $stream = fopen($filename, 'r');
     while ($data = fgetcsv($stream, separator: ';')) {
-        if ($data[0] == $username) {
-            $user = array('rol' => $data[2], 'name' => $data[3] . ' ' . $data[4]);
-        }
+        if ($data[0] == $username) $user = array(
+            'username' => $data[0],
+            'password' => $data[1],
+            'rol' => $data[2],
+            'name' => $data[3],
+            'surname' => $data[4]
+        ); 
     }
     fclose($stream);
     return $user;
 }
-

@@ -30,18 +30,23 @@
     </div>
     <button type="submit" name="registersubmit" class="btn btn-default">Submit</button>
   </form>
+  <?php
+    include 'fn/users.php';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $user = array(
+        'username' => htmlspecialchars($_POST['username']),
+        'password' => htmlspecialchars($_POST['password']),
+        'rol' => 'registered',
+        'name' => htmlspecialchars($_POST['name']),
+        'surname' => htmlspecialchars($_POST['surname'])
+      );
+      if (register('files/users.csv', $user)) {
+        header('Location: index.php');
+      } else {
+        echo 'Invalid credentials';
+      }
+    }
+  ?>
 </div>
-<?php
-	include 'fn/users.php';
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		$username = htmlspecialchars($_POST['username']);
-		$password = htmlspecialchars($_POST['password']);
-		$name = htmlspecialchars($_POST['name']);
-		$surname = htmlspecialchars($_POST['surname']);
-		if (register('files/users.csv', array($username, $password, $name, $surname))) {
-			header('Location: index.php');
-		}
-	}
-?>
 </body>
 </html>

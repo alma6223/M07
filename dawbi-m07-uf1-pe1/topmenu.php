@@ -19,7 +19,12 @@ session_start();
 ?>
 <?php
     if (isset($_SESSION['username'])) {
-        echo "<li><a href='#'>Logout</a></li>";
+        echo "<li><a href='logout.php'>Logout</a></li>";
+    }
+?>
+<?php
+    if (isset($_SESSION['full_name'])) {
+        echo "<li><a href='#'>{$_SESSION['full_name']}</a></li>";
     }
 ?>
 </ul>
