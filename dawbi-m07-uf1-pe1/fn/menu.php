@@ -4,12 +4,16 @@
  * @param string $filename csv filename
  * @return array category array
  */
-function categories(string $filename): array {
-    $stream = fopen($filename, 'r');
-    while ($categories = fgetcsv($stream, separator: ';')) {
-        return $categories;
+function categories(string $filename): array | bool {
+    if (file_exists($filename)) {
+        $stream = fopen($filename, 'r');
+        while ($categories = fgetcsv($stream, separator: ';')) {
+            return $categories;
+        }
+        fclose($stream);
+    } else {
+        return false;
     }
-    fclose($stream);
 }
 
 
@@ -18,14 +22,18 @@ function categories(string $filename): array {
  * @param string $filename csv filename
  * @return array menus array
  */
-function menu(string $filename): array {
+function menu(string $filename): array | bool {
     $menu = array();
-    $stream = fopen($filename, 'r');
-    while ($dish = fgetcsv($stream, separator: ';')) {
-        array_push($menu, array('id' => $dish[0], 'category' => $dish[1], 'name' => $dish[2], 'price' => $dish[3]));
+    if (file_exists($filename)) {
+        $stream = fopen($filename, 'r');
+        while ($dish = fgetcsv($stream, separator: ';')) {
+            array_push($menu, array('id' => $dish[0], 'category' => $dish[1], 'name' => $dish[2], 'price' => $dish[3]));
+        }
+        fclose($stream);
+        return $menu;
+    } else {
+        return false;
     }
-    fclose($stream);
-    return $menu;
 }
 
 

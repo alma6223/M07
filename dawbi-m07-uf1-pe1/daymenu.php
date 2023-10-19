@@ -16,19 +16,21 @@
         <?php include_once "topmenu.php";?>
         <div class="container">
         <h2>Day menu</h2>
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-</p>
         </div>
         <div id="menu">
             <?php
                 include 'fn/menu.php';
-                foreach(categories('files/categories.csv') as $category) {
-                    table($category, menu('files/menu.csv'));
+                $categories = categories('files/categories.csv');
+                $menu = menu('files/menu.csv');
+                if ($categories && $menu) {
+                    foreach($categories as $category) {
+                        table($category, $menu);
+                    }
+                } else {
+                    echo 'File not found';
                 }
             ?>
         </div>
-        <?php include_once "footer.php";?>
     </div>
     </body>
 </html>
