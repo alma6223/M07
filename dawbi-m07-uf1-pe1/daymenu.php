@@ -18,14 +18,12 @@
         <h2>Day menu</h2>
         </div>
         <div id="menu">
-            <?php
+			<?php
                 include 'fn/menu.php';
                 $categories = categories('files/categories.csv');
                 $menu = menu('files/menu.csv');
-                if ($categories && $menu) {
-                    foreach($categories as $category) {
-                        table($category, $menu);
-                    }
+				if ($categories && $menu) {
+					table($categories, $menu);
                 } else {
                     echo 'File not found';
                 }

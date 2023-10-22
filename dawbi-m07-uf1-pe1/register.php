@@ -30,23 +30,28 @@
     </div>
     <button type="submit" name="registersubmit" class="btn btn-default">Submit</button>
   </form>
-  <?php
+<?php
     include 'fn/users.php';
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      $user = array(
-        'username' => htmlspecialchars($_POST['username']),
-        'password' => htmlspecialchars($_POST['password']),
-        'rol' => 'registered',
-        'name' => htmlspecialchars($_POST['name']),
-        'surname' => htmlspecialchars($_POST['surname'])
-      );
-      if (register('files/users.csv', $user)) {
-        header('Location: index.php');
-      } else {
-        echo 'Invalid credentials';
-      }
-    }
-  ?>
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {	
+    	$user = array(
+        	'username' => htmlspecialchars($_POST['username']),
+        	'password' => htmlspecialchars($_POST['password']),
+        	'rol' => 'registered',
+        	'name' => htmlspecialchars($_POST['name']),
+        	'surname' => htmlspecialchars($_POST['surname'])
+		);
+		if (!empty($user['username']) && !empty($user['password']) && !empty($user['name']) && !empty($user['surname'])) {
+			$register = register('files/users.csv', $user);
+			if ($register) {
+        		header('Location: login.php');
+      		} else {
+        		echo 'Invalid username';
+      		}
+		} else {
+			echo 'Invalid register';
+		}
+	}
+?>
 </div>
 </body>
 </html>

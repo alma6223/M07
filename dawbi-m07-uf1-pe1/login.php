@@ -9,12 +9,31 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+	<?php
+		include 'fn/users.php';
+		$username = '';
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $username = htmlspecialchars($_POST['username']);
+            $password = htmlspecialchars($_POST['password']);
+            $login = login('files/users.csv', $username, $password);
+            if ($login) {
+                session_start();
+                $user = user('files/users.csv', $username);
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['rol'] = $user['rol'];
+                $_SESSION['full_name'] = $user['name'] . ' ' . $user['surname'];
+                header('Location: index.php');
+            } else {
+            	$message = 'Invalid credentials';
+            }
+        }
+    ?>
   <div class="container-fluid">
     <h2>Login form</h2>
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
       <div class="form-group">
         <label for="username">Username:</label>
-        <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">
+		<input type="text" class="form-control" id="username" placeholder="Enter username" name="username" value="<?php echo $username; ?>">
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
@@ -24,23 +43,12 @@
         <label><input type="checkbox" name="remember"> Remember me</label>
       </div>
       <button type="submit" name="loginsubmit" class="btn btn-default">Submit</button>
-    </form>
-    <?php
-      include 'fn/users.php';
-      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $username = htmlspecialchars($_POST['username']);
-        if (login('files/users.csv', $username, htmlspecialchars($_POST['password']))) {
-          session_start();
-          $user = user('files/users.csv', $username);
-          $_SESSION['username'] = $user['username'];
-          $_SESSION['rol'] = $user['rol'];
-          $_SESSION['full_name'] = $user['name'] . ' ' . $user['surname'];
-          header('Location: index.php');
-        } else {
-          echo 'Invalid credentials';
-        }
-      }
-    ?>
+	</form>
+	<?php
+		if (isset($message)) {
+			echo $message;
+		}	
+	?>
   </div>
 </body>
 </html>
